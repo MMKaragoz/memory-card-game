@@ -106,7 +106,7 @@ export default function Game() {
 
     return (
         <div className="game-container">
-            <button className="button" onClick={() => createRandomCards(5, allCards)}>
+            <button className="button" onClick={() => createRandomCards(12, allCards)}>
             Start The Game
             </button>
             <div className="cards-container">
