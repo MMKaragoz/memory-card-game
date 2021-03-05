@@ -1,0 +1,95 @@
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .button {
+        display: inline-block;
+        color: white;
+        background: #ABAEB0;
+        margin: 20px 0;
+        border: 1px solid #F3FAE1;
+        font-size: 25px;
+        border-radius: 10px;
+        cursor: pointer;
+        padding: 10px;
+        &:hover {
+            border: 2px solid ;
+            color: #D5D6D7;
+            background: #A473BF;
+            border-radius: 10px;
+        }
+        &:active {
+            
+        }
+    }
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    
+        .card {
+            width: 15%;
+            user-select: none;
+            height: 110px;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-bottom:15px;
+            transition: 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+
+            div {
+                backface-visibility: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                transition: 0.6s;
+                background: #7D479A; 
+            }
+            .front { 
+                font-size: 65px;
+                line-height: 120px;
+                cursor: pointer;
+                color: darken(#ffffff,20%);
+                display:flex;
+                align-items: center;
+                justify-content: center;
+            
+            }
+            .back {
+                transform: rotateY(180deg);
+                line-height: 110px;
+                img {
+                  vertical-align: middle;
+                  width: 90%;
+                  height: 50%;
+                }
+            }
+            &.opened {
+                transform: rotateY(180deg);
+            }
+            &.done {
+                transform: rotateY(180deg);
+
+                .back {
+                  box-shadow: 0 0 0 2px rgba(#000,.05) inset;
+                  animation: selected .8s 0s ease 1;
+                  animation-fill-mode: both;
+                  opacity: .2;
+                }
+            }
+        .game-over {
+            font-size: 50px;
+        }
+        
+        }
+       
+    }
+    
+}
