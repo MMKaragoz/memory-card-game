@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import _ from 'lodash';
+import { shuffle } from 'lodash-es';
 import './Game.scss';
 import Card from '../Card/Card';
 import StartGame from '../StartGame/StartGame';
@@ -24,7 +24,7 @@ export default function Game() {
             randomCards.push({image: cards[random], id: i, flipped: false, done: false}); // when we click, flipped will be true.
             randomCards.push({image: cards[random], id: numberOfCards+i, flipped: false, done: false}); // when we remember correctly, done will be true.
         }
-        randomCards = _.shuffle(randomCards); // shuffle the cards
+        randomCards = shuffle(randomCards); // shuffle the cards
         setChosenCards(randomCards)
     }
 
