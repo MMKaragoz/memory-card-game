@@ -15,6 +15,22 @@ export default function Game() {
     const [doneCards, setDoneCards] = useState([]); // cards we remembered right.
     const [score, setScore] = useState(0); // score 
 
+    useEffect(() => {
+        fetchFlags()        
+    }, []);
+
+    useEffect(() => {       
+        if (flippedCards.length === 2) {            
+            setTimeout(() => {               
+                accessFlipped('normal')
+            }, 700)
+
+            setTimeout(() => {              
+                accessFlipped('clear')
+            }, 1000)                  
+        }       
+    })
+
     function createRandomCards(numberOfCards = 10, cards) {
         setScore(0); // reset the score        
         let random = 0;
@@ -68,22 +84,6 @@ export default function Game() {
     function getScore() {       
         return score
     }
-
-    useEffect(() => {
-        fetchFlags()        
-    }, []);
-
-    useEffect(() => {       
-        if (flippedCards.length === 2) {            
-            setTimeout(() => {               
-                accessFlipped('normal')
-            }, 700)
-
-            setTimeout(() => {              
-                accessFlipped('clear')
-            }, 1000)                  
-        }       
-    })
 
     return (
         <div className="game-container">
