@@ -1,0 +1,19 @@
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    
+        .game-end {
+            font-size: 50px;
+        }
+        
+    }
+      
+}
+    

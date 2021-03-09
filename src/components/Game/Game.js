@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import './Game.scss';
+import Card from '../Card/Card';
+import StartGame from '../StartGame/StartGame';
+import Score from '../Score/Score';
+
 
 
 export default function Game() {
@@ -12,18 +16,14 @@ export default function Game() {
     const [score, setScore] = useState(0); // score 
 
     function createRandomCards(numberOfCards = 10, cards) {
-        setScore(0); // reset the score 
-        
+        setScore(0); // reset the score        
         let random = 0;
         let randomCards = [];
-
         for (let i = 0; i < numberOfCards; i++) {
             random = Math.floor(Math.random() * cards.length);
-
             randomCards.push({image: cards[random], id: i, flipped: false, done: false}); // when we click, flipped will be true.
             randomCards.push({image: cards[random], id: numberOfCards+i, flipped: false, done: false}); // when we remember correctly, done will be true.
         }
-
         randomCards = _.shuffle(randomCards); // shuffle the cards
         setChosenCards(randomCards)
     }
@@ -33,29 +33,21 @@ export default function Game() {
         fetch("https://restcountries.eu/rest/v2/all")
         .then((reponse) => reponse.json())
         .then((data) => {
-
-            const allFlags = data.map((data) => {
-    
+            const allFlags = data.map((data) => {   
                 return data.flag;
-            })
-            
-            setAllCards(allFlags)
-            
+            })          
+            setAllCards(allFlags)           
         }, console.error)
     }
 
-    function accessFlipped(option = 'normal') {
-        
+    function accessFlipped(option = 'normal') {       
         setTimeout(() => {
-
-            if (option === 'normal' && ((flippedCards[0].image === flippedCards[1].image) && (flippedCards[0].id !== flippedCards[1].id ))) {
-                
+            if (option === 'normal' && ((flippedCards[0].image === flippedCards[1].image) && (flippedCards[0].id !== flippedCards[1].id ))) {              
                 flippedCards[0].done = true;
                 flippedCards[1].done = true;
                 setDoneCards(doneCards => ([...doneCards,flippedCards]));;
                 setScore(score + 10)
             }
-
         }, 1000)
 
         if (option === 'clear') {
@@ -67,68 +59,58 @@ export default function Game() {
     }
 
     function clickHandler(card) {
-
-        if (flippedCards.length < 2 && card.done === false) {
-            
+        if (flippedCards.length < 2 && card.done === false) {           
             card.flipped = true;
-            setFlippedCards(flippedCards => ([...flippedCards,card]))   
-            
+            setFlippedCards(flippedCards => ([...flippedCards,card]))              
         }
     }
 
-    function getScore() {
-        
+    function getScore() {       
         return score
     }
 
     useEffect(() => {
-        fetchFlags()
-        
+        fetchFlags()        
     }, []);
 
-    useEffect(() => {
-
-        
-        if (flippedCards.length === 2) {
-            
-            setTimeout(() => {
-                
+    useEffect(() => {       
+        if (flippedCards.length === 2) {            
+            setTimeout(() => {               
                 accessFlipped('normal')
             }, 700)
-            setTimeout(() => {
-                
+
+            setTimeout(() => {              
                 accessFlipped('clear')
-            }, 1000)
-                    
-        }
-        
+            }, 1000)                  
+        }       
     })
 
     return (
         <div className="game-container">
-            <button className="button" onClick={() => createRandomCards(12, allCards)}>
-            Start The Game
-            </button>
+            <StartGame
+                onClick = {() => createRandomCards(12, allCards)}
+                innerHTML = {`Start The Game`}        
+            />
             <div className="cards-container">
                 {chosenCards.map((card) => {
                     return (
-                    <div className={`card ${card.flipped ? 'opened' : ''} ${card.done ? 'done' : ''}`} onClick={() => clickHandler(card)}>
-                        <div className="front">
-                            ?
-                        </div>
-                        <div className="back">
-                            <img src={card.image} alt="idk" className=""/>
-                        </div>
-                    </div>
+                        <Card 
+                            image = {card.image}
+                            flipped = {card.flipped}
+                            done = {card.done}
+                            onClick = {() => clickHandler(card)}
+                        />
                     )
-                })}
-                
+                })}               
             </div>  
-            <IsGameOver
+            <IsGameEnd
                 doneCards = {doneCards}
                 chosenCards = {chosenCards}
+                score = {score}
             />
-            <p className="score">Score:  {getScore()}</p>   
+            <Score
+                getScore = {getScore}
+            />
         </div>
     
         
@@ -136,11 +118,10 @@ export default function Game() {
 }
 
 
-const IsGameOver = (props) => {
+const IsGameEnd = (props) => {
     const {doneCards, chosenCards} = props;
     if((doneCards.length * 2 === chosenCards.length && doneCards.length > 0)) {
-
-        return <h1 className="game-over">Congratulations!</h1>
+        return <h1 className="game-end">Congratulations!</h1>
     }
     return <></>
 }

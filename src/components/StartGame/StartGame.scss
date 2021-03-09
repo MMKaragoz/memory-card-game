@@ -1,0 +1,17 @@
+.button {
+    display: inline-block;
+    color: white;
+    background: #ABAEB0;
+    margin: 20px 0;
+    border: 1px solid #F3FAE1;
+    font-size: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+    &:hover {
+        border: 2px solid ;
+        color: #D5D6D7;
+        background: #A473BF;
+        border-radius: 10px;
+    }
+}
